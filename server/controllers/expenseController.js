@@ -103,7 +103,7 @@ const updateExpense = async (req, res) => {
     if (description !== undefined && (!description.trim() || description.length > 200)) {
       return res.status(400).json({ message: 'Description is required (max 200 chars)' });
     }
-
+console.log('Updating expense with data:', { amount, category, description, date });
     expense.amount = amount ?? expense.amount;
     expense.category = category ?? expense.category;
     expense.description = description ?? expense.description;

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const generateAccessToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 };
 
 const generateRefreshToken = (id) => {
@@ -114,9 +114,8 @@ const refreshUserToken = async (req, res) => {
 
 const logoutUser = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
-    user.refreshToken = null;
-    await user.save();
+    req.user.refreshToken = null;
+    await req.user.save();
     res.json({ message: 'Logged out successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
